@@ -1,16 +1,20 @@
 {
-  "name": "zzick-muck",
+  "name": "zzik-meok",
   "private": true,
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\"",
+    "extension": "yarn workspace zzik-meok-extension",
+    "pc": "yarn workspace zzik-meok-pc",
+    "server": "yarn workspace zzik-meok-server",
+    "clean:package": "npx rimraf ./**/node_modules"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "prettier": "3.4.2",
     "turbo": "^2.3.3",
-    "typescript": "5.5.4"
+    "typescript": "~5.6.2"
   },
   "engines": {
     "node": ">=18"

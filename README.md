@@ -1,84 +1,58 @@
-# Turborepo starter
+# 찍먹 (ZzikMeok)
 
-This is an official starter Turborepo.
+## 소개
 
-## Using this example
+**찍먹**은 "손가락으로 한입 찍어 먹어본다"는 의미의 은어에서 영감을 받아 개발된 애플리케이션입니다.  
+새로운 게임, 콘텐츠, 시스템 등을 잠시 체험해보는 것처럼, **찍먹**은 사용자가 저장하고 싶은 웹 콘텐츠(블로그 포스팅, 기사, 쇼핑 아이템 등)를 디렉토리별로 저장하고 손쉽게 접근할 수 있는 **북마크 관리 플랫폼**입니다.
 
-Run the following command:
+## 주요 기능
 
-```sh
-npx create-turbo@latest
+- **디렉토리별 저장**: 블로그 글, 기사, 상품 페이지 등 다양한 웹 콘텐츠를 폴더별로 정리.
+- **빠른 검색 및 정렬**: 저장된 북마크를 이름, 날짜, 태그 등을 기준으로 빠르게 검색 및 정렬.
+- **미리 보기 지원**: 북마크한 페이지를 브라우저로 이동하지 않고 앱 내에서 미리 보기 가능.
+- **커스터마이징 가능한 폴더 아이콘**: 폴더별 아이콘 설정으로 시각적 구분 용이.
+- **공유 기능**: 북마크를 친구나 동료와 공유하거나 임베드 코드로 웹사이트에 삽입 가능.
+- **영구 저장 옵션**: 웹페이지가 삭제되더라도 내용을 유지할 수 있는 영구 저장 기능.
+
+## 설치 방법
+
+1. 이 저장소를 클론합니다:
+
+```shell
+git clone https://github.com/username/zzikmeok.git
 ```
 
-## What's inside?
+2. 프로젝트 디렉토리로 이동합니다:
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+```shell
+cd zzikmeok
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
+3. 의존성을 설치합니다:
 
 ```
-cd my-turborepo
-pnpm dev
+npm install
 ```
 
-### Remote Caching
+4. 로컬 서버를 실행합니다:
+   npm start
+5. 브라우저에서 `http://localhost:3000`으로 접속합니다.
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## 사용 방법
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+1. 앱을 실행하고 계정을 생성하거나 로그인합니다.
+2. 북마크할 웹페이지 URL을 입력하거나 브라우저 확장 프로그램을 사용하여 추가합니다.
+3. 디렉토리를 생성하고 북마크를 정리합니다.
+4. 필요할 때 검색하거나 미리 보기 기능으로 내용을 확인하세요.
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+## 기술 스택
 
-```
-cd my-turborepo
-npx turbo login
-```
+- **프론트엔드**: React.js, Tailwind CSS
+- **백엔드**: Node.js, Express.js
+- **데이터베이스**: MongoDB
+- **배포**: AWS S3 및 CloudFront
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## 기여 방법
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+1. 이 저장소를 포크합니다.
+2. 새로운 브랜치를 생성하세요:

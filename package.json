@@ -9,6 +9,7 @@
     "extension": "yarn workspace zzik-meok-extension",
     "pc": "yarn workspace zzik-meok-pc",
     "server": "yarn workspace zzik-meok-server",
+    "utils": "yarn workspace @zzik-meok/utils",
     "clean:package": "npx rimraf ./**/node_modules"
   },
   "devDependencies": {

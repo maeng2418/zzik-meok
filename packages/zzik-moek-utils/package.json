@@ -1,0 +1,12 @@
+{
+  "name": "@zzik-meok/utils",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "got": "^14.4.5",
+    "ky": "^1.7.4",
+    "qs": "^6.13.1"
+  }
+}

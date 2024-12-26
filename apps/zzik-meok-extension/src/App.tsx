@@ -1,8 +1,20 @@
-import { useState } from 'react'
+import KyService from '@zzik-meok/utils/client/kyService'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    const fetchKyData = async () => {
+      const apiService = new KyService()
+      const data = await apiService.get('users', { foods: [1, 2, 3] })
+      console.log(data)
+      return data
+    }
+
+    fetchKyData()
+  }, [])
 
   return (
     <>

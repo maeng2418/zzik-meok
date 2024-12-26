@@ -1,0 +1,28 @@
+{
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "64": "icon64.png",
+    "128": "icon128.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "64": "icon64.png",
+      "128": "icon128.png"
+    },
+    "default_popup": "index.html"
+  },
+  "version": "0.0.1",
+  "author": "Maeng. <maeng2418@gmail.com>",
+  "name": "DEV | ZZIK MEOK",
+  "description": "A Zzik Meok extension.",
+  "host_permissions": ["https://*/*"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' http://localhost;object-src 'self';"
+  }
+}

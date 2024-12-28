@@ -11,12 +11,14 @@ export default ({ mode }: ConfigEnv) => {
   return defineConfig({
     plugins: [react()],
     server: {
+      // open: true,
       https: isDevelop
         ? {
             key: fs.readFileSync('../../private-key.pem'),
             cert: fs.readFileSync('../../public-certificate.pem'),
           }
         : undefined,
+      host: process.env.VITE_EXTENSION_HOST_NAME,
     },
   })
 }

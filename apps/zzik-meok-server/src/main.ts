@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import * as fs from 'fs'
 import { AppModule } from './app.module'
@@ -15,6 +16,10 @@ async function bootstrap() {
     credentials: true,
     exposedHeaders: ['Authorization'], // * 사용할 헤더 추가.
   })
-  await app.listen(4000)
+
+  const configService = app.get(ConfigService)
+  const hostname = configService.get<string>('API_SERVER_HOST_NAME')
+
+  await app.listen(4000, hostname)
 }
 bootstrap()

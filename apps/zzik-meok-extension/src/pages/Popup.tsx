@@ -1,5 +1,5 @@
+import { runWithBrowser } from '@/utils/webextension'
 import { useState } from 'react'
-import browser from 'webextension-polyfill'
 import './Popup.css'
 
 const Popup = () => {
@@ -8,14 +8,15 @@ const Popup = () => {
 
   // 메시지를 백그라운드로 전송
   const sendMessageToBackground = () => {
-    if(!browser.runtime) return
-    browser.runtime.sendMessage({ type: 'GREETING', message: 'Hello from App!' }).then((res) => {
-      const response = res as { reply: string } | undefined
-      if (response && response.reply) {
-        setMessageFromBackground(response.reply)
-      }
-      return true
-    })
+    runWithBrowser((browser) =>
+      browser.runtime.sendMessage({ type: 'GREETING', message: 'Hello from App!' }).then((res) => {
+        const response = res as { reply: string } | undefined
+        if (response && response.reply) {
+          setMessageFromBackground(response.reply)
+        }
+        return true
+      }),
+    )
   }
 
   return (

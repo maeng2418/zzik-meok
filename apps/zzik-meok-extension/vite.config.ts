@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react'
+import path from 'path'
 import { ConfigEnv, defineConfig, loadEnv, PluginOption } from 'vite'
 import webExtension, { readJsonFile } from 'vite-plugin-web-extension'
 
@@ -36,6 +37,9 @@ export default ({ mode }: ConfigEnv) => {
       //     }
       //   : undefined,
       host: process.env.VITE_EXTENSION_HOST_NAME,
+    },
+    resolve: {
+      alias: { '@': path.resolve(__dirname, 'src') },
     },
   })
 }

@@ -1,9 +1,10 @@
+import zzikmeokLogo from '@/assets/images/icon.svg'
 import { runWithBrowser } from '@/utils/webextension'
+import '@zzik-meok/ui/styles.css'
 import { useState } from 'react'
 import './Popup.css'
 
 const Popup = () => {
-  const [count, setCount] = useState(0)
   const [messageFromBackground, setMessageFromBackground] = useState('')
 
   // 메시지를 백그라운드로 전송
@@ -21,25 +22,32 @@ const Popup = () => {
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer noopener">
-          Vite logo
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer noopener">
-          logo react
+      <div className="flex justify-center">
+        <a
+          href="https://vite.dev"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="font-medium text-[#646cff] hover:text-[#535bf2]"
+        >
+          <img
+            src={zzikmeokLogo}
+            id="logo"
+            className="w-[161.45px] h-[144px] p-3 will-change-[filter] transition-[filter] duration-300"
+            alt="Vite logo"
+          />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <h1 className=" font-medium text-[48px] leading-[1.1] mx-auto my-[32px]">ZZIK MEOK</h1>
+      <div className="flex justify-center">
+        <button
+          id="zzikmeok-button"
+          className="shadow-[0_1px_#ffffffbf_inset] flex justify-center items-center gap-2 text-white text-base not-italic font-semibold leading-6 transition-all duration-[0.2s] ease-[ease-in-out] w-fit cursor-pointer px-[18px] py-[10px] rounded-lg border-[none]"
+          onClick={sendMessageToBackground}
+        >
+          찍먹하기
+        </button>
+        {messageFromBackground && <p>Response from Background: {messageFromBackground}</p>}
       </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-      <h1>Chrome Extension with React</h1>
-      <button onClick={sendMessageToBackground}>Send Message to Background</button>
-      {messageFromBackground && <p>Response from Background: {messageFromBackground}</p>}
     </>
   )
 }

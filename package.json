@@ -10,6 +10,7 @@
     "pc": "yarn workspace zzik-meok-pc",
     "server": "yarn workspace zzik-meok-server",
     "utils": "yarn workspace @zzik-meok/utils",
+    "ui": "yarn workspace @zzik-meok/ui",
     "clean:package": "npx rimraf ./**/node_modules"
   },
   "devDependencies": {

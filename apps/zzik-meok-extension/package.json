@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@zzik-meok/ui": "*",
     "@zzik-meok/utils": "*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -21,7 +22,10 @@
     "@vitejs/plugin-react": "^4.3.4",
     "@zzik-meok/eslint-config": "*",
     "@zzik-meok/typescript-config": "*",
+    "autoprefixer": "^10.4.20",
     "globals": "^15.13.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
     "vite": "^6.0.3",
     "vite-plugin-web-extension": "^4.0.0",

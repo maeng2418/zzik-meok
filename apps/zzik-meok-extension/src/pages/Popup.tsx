@@ -1,6 +1,5 @@
 import zzikmeokLogo from '@/assets/images/icon.svg'
 import { runWithBrowser } from '@/utils/webextension'
-import '@zzik-meok/ui/styles.css'
 import { useState } from 'react'
 import './Popup.css'
 

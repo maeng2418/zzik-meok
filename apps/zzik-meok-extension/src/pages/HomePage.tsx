@@ -1,7 +1,6 @@
 import zzikmeokLogo from '@/assets/images/icon.svg'
 import { runWithBrowser } from '@/utils/webextension'
 import { useState } from 'react'
-import './Popup.css'
 
 const Popup = () => {
   const [messageFromBackground, setMessageFromBackground] = useState('')

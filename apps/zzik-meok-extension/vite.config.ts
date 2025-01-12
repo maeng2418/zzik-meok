@@ -29,13 +29,14 @@ export default ({ mode }: ConfigEnv) => {
       }) as PluginOption,
     ],
     server: {
-      // open: true,
+      open: './src/popup.html',
       // https: isDevelop
       //   ? {
       //       key: fs.readFileSync('../../private-key.pem'),
       //       cert: fs.readFileSync('../../public-certificate.pem'),
       //     }
       //   : undefined,
+
       host: process.env.VITE_EXTENSION_HOST_NAME,
     },
     resolve: {

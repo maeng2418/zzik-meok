@@ -1,5 +1,6 @@
 import type { PlopTypes } from '@turbo/gen'
-
+import fs from 'fs'
+import path from 'path'
 // Learn more about Turborepo Generators at https://turbo.build/repo/docs/core-concepts/monorepos/code-generation
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
@@ -14,16 +15,30 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
     ],
     actions: [
+      async (data: any) => {
+        const dirPath = path.resolve(plop.getDestBasePath(), `src/components/${data.name}`)
+        if (!fs.existsSync(dirPath)) {
+          fs.mkdirSync(dirPath, { recursive: true })
+          console.log(`Directory created at ${dirPath}`)
+        }
+        return `Directory checked/created: ${data.name}`
+      },
+
       {
         type: 'add',
-        path: 'src/{{kebabCase name}}.tsx',
+        path: 'src/components/{{kebabCase name}}/index.ts',
+        templateFile: 'templates/index.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/components/{{kebabCase name}}/{{kebabCase name}}.tsx',
         templateFile: 'templates/component.hbs',
       },
       {
-        type: 'append',
-        path: 'package.json',
-        pattern: /"exports": {(?<insertion>)/g,
-        template: '    "./{{kebabCase name}}": "./src/{{kebabCase name}}.tsx",',
+        type: 'modify',
+        path: 'src/components/index.ts',
+        pattern: /(\s*)$/,
+        template: "\nexport * from './{{kebabCase name}}'",
       },
     ],
   })

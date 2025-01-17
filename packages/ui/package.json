@@ -11,6 +11,7 @@
     "build": "tailwindcss -i ./src/styles/styles.css -o ./dist/index.css",
     "lint": "eslint . --max-warnings 0",
     "generate": "turbo gen react-component",
+    "svgr": "svgr --out-dir src/components/icons -- src/assets",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
@@ -25,9 +26,11 @@
   },
   "dependencies": {
     "@ark-ui/react": "^4.6.0",
+    "@svgr/cli": "^8.1.0",
+    "@zzik-meok/utils": "*",
     "classnames": "^2.5.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "@zzik-meok/utils": "*"
+    "svgo": "^3.3.2"
   }
 }

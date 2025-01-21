@@ -1,3 +1,4 @@
+import ThemeProvider from '@/components/theme-provider'
 import AboutPage from '@/pages/AboutPage'
 import HomePage from '@/pages/HomePage'
 import { isWebExtension } from '@/utils/webextension'
@@ -18,9 +19,9 @@ const router = isWebExtension ? createMemoryRouter(Pages) : createBrowserRouter(
 
 const App = () => {
   return (
-    <main>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <RouterProvider router={router} />
-    </main>
+    </ThemeProvider>
   )
 }
 

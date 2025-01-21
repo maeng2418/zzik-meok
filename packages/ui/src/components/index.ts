@@ -1,3 +1,2 @@
-export * from './button'
-export * from './card'
-export * from './code'
+export * from './icons'
+export * from './ui'

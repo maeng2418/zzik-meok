@@ -15,6 +15,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
     ],
     actions: [
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       async (data: any) => {
         const dirPath = path.resolve(plop.getDestBasePath(), `src/components/${data.name}`)
         if (!fs.existsSync(dirPath)) {

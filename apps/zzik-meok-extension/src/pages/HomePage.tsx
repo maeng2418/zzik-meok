@@ -1,7 +1,6 @@
 import zzikmeokLogo from '@/assets/images/icon.svg'
 import { runWithBrowser } from '@/utils/webextension'
 import { useState } from 'react'
-import { Link } from 'react-router'
 
 const Popup = () => {
   const [messageFromBackground, setMessageFromBackground] = useState('')
@@ -50,7 +49,6 @@ const Popup = () => {
         >
           찍먹하기
         </button>
-        <Link to="/about">About</Link>;
         {messageFromBackground && <p>Response from Background: {messageFromBackground}</p>}
         {currentUrl && <p>currentUrl: {currentUrl}</p>}
       </div>

@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react'
-import path from 'path'
 import { ConfigEnv, defineConfig, loadEnv, PluginOption } from 'vite'
 import webExtension, { readJsonFile } from 'vite-plugin-web-extension'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 const generateManifest = () => {
   const manifest = readJsonFile('src/manifest.json')
@@ -27,6 +27,7 @@ export default ({ mode }: ConfigEnv) => {
         manifest: generateManifest,
         disableAutoLaunch: true,
       }) as PluginOption,
+      tsconfigPaths(),
     ],
     server: {
       // https: isDevelop
@@ -36,9 +37,6 @@ export default ({ mode }: ConfigEnv) => {
       //     }
       //   : undefined,
       host: process.env.VITE_EXTENSION_HOST_NAME,
-    },
-    resolve: {
-      alias: { '@': path.resolve(__dirname, 'src') },
     },
   })
 }

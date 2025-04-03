@@ -1,14 +1,14 @@
 'use client'
 
+import { Moon, Sun } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import {
   Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@zzik-meok/ui'
-import { Moon, Sun } from 'lucide-react'
-import { useTheme } from 'next-themes'
+} from '../../../packages/zzik-moek-ui/src'
 
 const ModeToggle = () => {
   const { setTheme } = useTheme()

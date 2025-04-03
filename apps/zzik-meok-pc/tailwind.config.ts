@@ -1,4 +1,6 @@
-import zzikmeokUIConfig, { ZzikmeokUIConfig } from '@zzik-meok/ui/tailwind-config'
+import zzikmeokUIConfig, {
+  ZzikmeokUIConfig,
+} from '../../packages/zzik-moek-ui/src/config/tailwind-config'
 
 export default {
   content: [

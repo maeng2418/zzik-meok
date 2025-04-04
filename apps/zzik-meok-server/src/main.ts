@@ -4,22 +4,28 @@ import * as fs from 'fs'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
-  const httpsOptions = {
-    key: fs.readFileSync('../../private-key.pem'),
-    cert: fs.readFileSync('../../public-certificate.pem'),
-  }
-  const app = await NestFactory.create(AppModule, {
-    httpsOptions,
-  })
-  app.enableCors({
-    origin: true, // * 허용할 도메인 추가. eg. [http://localhost:3000, https://localhost:3000]
-    credentials: true,
-    exposedHeaders: ['Authorization'], // * 사용할 헤더 추가.
-  })
-
+  const app = await NestFactory.create(AppModule)
   const configService = app.get(ConfigService)
-  const hostname = configService.get<string>('API_SERVER_HOST_NAME')
 
-  await app.listen(4000, hostname)
+  // HTTPS 설정
+  const httpsKeyPath = configService.get<string>('HTTPS_KEY_PATH')
+  const httpsCertPath = configService.get<string>('HTTPS_CERT_PATH')
+
+  if (httpsKeyPath && httpsCertPath) {
+    const httpsOptions = {
+      key: fs.readFileSync(httpsKeyPath),
+      cert: fs.readFileSync(httpsCertPath),
+    }
+    app.enableCors({
+      origin: configService.get<string[]>('ALLOWED_ORIGINS') || ['http://localhost:3000'],
+      credentials: true,
+      exposedHeaders: ['Authorization'],
+    })
+  }
+
+  const hostname = configService.get<string>('API_SERVER_HOST_NAME')
+  const port = configService.get<number>('API_SERVER_PORT') || 4000
+
+  await app.listen(port, hostname)
 }
 bootstrap()

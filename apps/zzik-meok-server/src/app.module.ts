@@ -3,8 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { validationSchema } from './config/validationSchema'
-import { UsersController } from './users/users.controller'
-import { UsersService } from './users/users.service'
+import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [
@@ -13,8 +12,9 @@ import { UsersService } from './users/users.service'
       isGlobal: true,
       validationSchema,
     }),
+    UsersModule,
   ],
-  controllers: [AppController, UsersController],
-  providers: [AppService, UsersService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

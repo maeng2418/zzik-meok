@@ -2,6 +2,7 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
 import { ConfigEnv, defineConfig, loadEnv, PluginOption } from 'vite'
+import svgr from 'vite-plugin-svgr'
 import webExtension, { readJsonFile } from 'vite-plugin-web-extension'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
@@ -30,6 +31,7 @@ export default ({ mode }: ConfigEnv) => {
         disableAutoLaunch: true,
       }) as PluginOption,
       tsconfigPaths(),
+      svgr(),
     ],
     build: {
       rollupOptions: {

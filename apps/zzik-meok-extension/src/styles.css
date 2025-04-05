@@ -6,6 +6,7 @@
   min-width: 300px; /* 800px (Chrome 확장프로그램 최대 너비) */
   min-height: 500px; /* 600px (Chrome 확장프로그램 최대 높이) */
   margin: 0 auto;
+  padding: 16px;
   text-align: center;
 }
 

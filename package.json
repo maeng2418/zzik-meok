@@ -2,21 +2,26 @@
   "name": "zzik-meok",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\"",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rimraf node_modules .turbo",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "type-check": "turbo run type-check",
     "extension": "yarn workspace zzik-meok-extension",
     "pc": "yarn workspace zzik-meok-pc",
     "server": "yarn workspace zzik-meok-server",
     "utils": "yarn workspace @zzik-meok/utils",
     "ui": "yarn workspace @zzik-meok/ui",
-    "clean:package": "npx rimraf ./**/node_modules"
+    "preinstall": "npx only-allow yarn"
   },
   "devDependencies": {
     "prettier": "3.4.2",
     "turbo": "^2.3.3",
-    "typescript": "~5.6.2"
+    "typescript": "~5.6.2",
+    "rimraf": "^5.0.0",
+    "only-allow": "^1.2.1"
   },
   "engines": {
     "node": ">=18"

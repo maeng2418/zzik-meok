@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 :root {
-  max-width: 1280px;
+  min-width: 300px; /* 800px (Chrome 확장프로그램 최대 너비) */
+  min-height: 500px; /* 600px (Chrome 확장프로그램 최대 높이) */
   margin: 0 auto;
   text-align: center;
 }
@@ -30,7 +31,7 @@ body {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 
-#zzikmeok-button {
+#zzik-meok-button {
   background: radial-gradient(141.42% 141.42% at 100% 0%, #fff6, #fff0),
     radial-gradient(140.35% 140.35% at 100% 94.74%, #bd34fe, #bd34fe00),
     radial-gradient(89.94% 89.94% at 18.42% 15.79%, #41d1ff, #41d1ff00);
@@ -38,7 +39,7 @@ body {
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
-#zzikmeok-button:hover {
+#zzik-meok-button:hover {
   transform: translate3d(0, -2px, 0);
   filter: drop-shadow(0 0 2em #646cffaa);
 }

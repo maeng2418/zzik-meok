@@ -1,21 +1,9 @@
 import ThemeProvider from '@/components/theme-provider'
-import AboutPage from '@/pages/AboutPage'
-import HomePage from '@/pages/HomePage'
+import Routes from '@/constants/routes'
 import { isWebExtension } from '@/utils/webextension'
-import { createBrowserRouter, createMemoryRouter, RouteObject, RouterProvider } from 'react-router'
+import { createBrowserRouter, createMemoryRouter, RouterProvider } from 'react-router'
 
-const Pages: RouteObject[] = [
-  {
-    path: '/',
-    element: <HomePage />,
-  },
-  {
-    path: '/about',
-    element: <AboutPage />,
-  },
-] as const
-
-const router = isWebExtension ? createMemoryRouter(Pages) : createBrowserRouter(Pages)
+const router = isWebExtension ? createMemoryRouter(Routes) : createBrowserRouter(Routes)
 
 const App = () => {
   return (

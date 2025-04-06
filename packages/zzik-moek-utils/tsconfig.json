@@ -1,0 +1,15 @@
+{
+  "extends": "@zzik-meok/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true
+  },
+  "include": ["./client", "./server", "./common"],
+  "exclude": ["node_modules", "dist"]
+}

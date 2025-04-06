@@ -1,6 +1,6 @@
 import URLMap from '@/constants/url-map'
 import { runWithBrowser } from '@/utils/webextension'
-import { toURL } from '@zzik-meok/utils/client/url'
+import { toURL } from '@zzik-meok/utils/client'
 import { useNavigate } from 'react-router'
 
 const ZzikMeokButton = () => {

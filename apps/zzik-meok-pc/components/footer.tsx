@@ -1,5 +1,5 @@
+import { cn } from '@zzik-meok/ui'
 import { ComponentProps } from 'react'
-import { cn } from '../../../packages/zzik-moek-ui/src'
 
 const Footer = ({ className, ...props }: ComponentProps<'footer'>) => {
   return (

@@ -8,7 +8,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '../../../packages/zzik-moek-ui/src'
+} from '@zzik-meok/ui'
 
 const Banner = () => {
   return (

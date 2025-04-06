@@ -1,10 +1,10 @@
 'use client'
 
+import { cn } from '@zzik-meok/ui'
 import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ComponentProps } from 'react'
-import { cn } from '../../../packages/zzik-moek-ui/src'
 import ModeToggle from './mode-toggle'
 
 const Header = ({ className, ...props }: ComponentProps<'header'>) => {

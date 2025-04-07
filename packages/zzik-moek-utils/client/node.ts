@@ -1,7 +1,7 @@
 import got, { Got, OptionsOfTextResponseBody } from 'got'
 import qs from 'qs'
 
-class GotService {
+export class GotService {
   private readonly instance: Got
 
   constructor() {
@@ -24,4 +24,3 @@ class GotService {
   }
 }
 
-export default GotService

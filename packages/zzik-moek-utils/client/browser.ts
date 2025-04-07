@@ -1,7 +1,7 @@
 import ky, { Input, KyInstance, Options } from 'ky'
 import qs from 'qs'
 
-class KyService {
+export class KyService {
   private readonly instance: KyInstance
 
   constructor() {
@@ -55,5 +55,3 @@ class KyService {
       .json()
   }
 }
-
-export default KyService

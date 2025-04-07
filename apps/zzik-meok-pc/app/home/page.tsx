@@ -1,4 +1,4 @@
-import { GotService } from '@zzik-meok/utils/client'
+import { GotService } from '@zzik-meok/utils/client/node'
 import Box from './box'
 
 const HomePage = async () => {

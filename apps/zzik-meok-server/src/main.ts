@@ -1,11 +1,19 @@
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
+import * as compression from 'compression'
 import * as fs from 'fs'
+import helmet from 'helmet'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   const configService = app.get(ConfigService)
+
+  // 보안 미들웨어 설정
+  app.use(helmet())
+
+  // 응답 압축 설정
+  app.use(compression())
 
   // HTTPS 설정
   const httpsKeyPath = configService.get<string>('HTTPS_KEY_PATH')

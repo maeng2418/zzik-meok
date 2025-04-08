@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import * as compression from 'compression'
+import { rateLimit } from 'express-rate-limit'
 import * as fs from 'fs'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
@@ -27,6 +28,14 @@ async function bootstrap() {
 
   // 응답 압축 설정
   app.use(compression())
+
+  // Rate limiting 설정
+  app.use(
+    rateLimit({
+      windowMs: configService.get<number>('RATE_LIMIT_TTL') * 1000, // 기본값: 60초
+      max: configService.get<number>('RATE_LIMIT_MAX'), // 기본값: 100 요청
+    }),
+  )
 
   // HTTPS 설정
   const httpsKeyPath = configService.get<string>('HTTPS_KEY_PATH')

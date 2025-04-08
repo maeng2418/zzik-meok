@@ -17,4 +17,6 @@ export const validationSchema = Joi.object({
       }
     })
     .default('["http://localhost:3000"]'),
+  RATE_LIMIT_TTL: Joi.number().default(60),
+  RATE_LIMIT_MAX: Joi.number().default(100),
 })

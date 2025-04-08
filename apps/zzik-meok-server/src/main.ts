@@ -8,7 +8,13 @@ import helmet from 'helmet'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, {
+    logger:
+      process.env.NODE_ENV === 'production'
+        ? ['error', 'warn'] // 프로덕션 환경에서는 에러와 경고만 로깅
+        : ['error', 'warn', 'log', 'debug', 'verbose'], // 개발 환경에서는 모든 로그 레벨 활성화
+    bufferLogs: true, // 로그 버퍼링 활성화
+  })
   const configService = app.get(ConfigService)
 
   // 전역 파이프 설정

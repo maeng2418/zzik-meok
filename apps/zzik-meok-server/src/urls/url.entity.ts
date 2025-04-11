@@ -1,33 +1,41 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { User } from '../users/user.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm'
+import { User } from '../users/user.entity'
 
 @Entity('urls')
 export class Url {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column({ length: 2000 })
-  url: string;
-  
+  url: string
+
   @Column({ nullable: true })
-  title: string;
-  
+  title: string
+
   @Column({ nullable: true })
-  description: string;
-  
+  description: string
+
   @Column({ default: false })
-  isBookmarked: boolean;
-  
+  isBookmarked: boolean
+
   @CreateDateColumn()
-  createdAt: Date;
-  
+  createdAt: Date
+
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date
 
   @Column()
-  userId: number;
+  userId: number
 
-  @ManyToOne(() => User, user => user.urls)
+  @ManyToOne(() => User, (user) => user.urls)
   @JoinColumn({ name: 'userId' })
-  user: User;
+  user: User
 }

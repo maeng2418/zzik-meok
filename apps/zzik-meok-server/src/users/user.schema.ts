@@ -1,4 +1,4 @@
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
 export const userSchema = Joi.object({
   id: Joi.number().integer().positive(),
@@ -6,5 +6,5 @@ export const userSchema = Joi.object({
   name: Joi.string().min(2).max(30).required(),
   password: Joi.string().min(8).required(),
   createdAt: Joi.date(),
-  updatedAt: Joi.date()
-});
+  updatedAt: Joi.date(),
+})

@@ -23,4 +23,3 @@ export class GotService {
     return this.instance.get(url, { searchParams: this.serializeParams(params), ...options }).json()
   }
 }
-

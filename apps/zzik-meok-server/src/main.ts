@@ -7,13 +7,19 @@ import * as fs from 'fs'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
 
-async function bootstrap() {
+const bootstrap = async () => {
+  // HTTPS 설정
+  const httpsOptions = {
+    key: fs.readFileSync('../../private-key.pem'),
+    cert: fs.readFileSync('../../public-certificate.pem'),
+  }
   const app = await NestFactory.create(AppModule, {
     logger:
       process.env.NODE_ENV === 'production'
         ? ['error', 'warn'] // 프로덕션 환경에서는 에러와 경고만 로깅
         : ['error', 'warn', 'log', 'debug', 'verbose'], // 개발 환경에서는 모든 로그 레벨 활성화
     bufferLogs: true, // 로그 버퍼링 활성화
+    httpsOptions,
   })
   const configService = app.get(ConfigService)
 
@@ -38,30 +44,21 @@ async function bootstrap() {
   // Rate limiting 설정
   app.use(
     rateLimit({
-      windowMs: configService.get<number>('RATE_LIMIT_TTL') * 1000, // 기본값: 60초
-      max: configService.get<number>('RATE_LIMIT_MAX'), // 기본값: 100 요청
+      windowMs: configService.get<number>('NEST_RATE_LIMIT_TTL') * 1000, // 기본값: 60초
+      max: configService.get<number>('NEST_RATE_LIMIT_MAX'), // 기본값: 100 요청
     }),
   )
 
-  // HTTPS 설정
-  const httpsKeyPath = configService.get<string>('HTTPS_KEY_PATH')
-  const httpsCertPath = configService.get<string>('HTTPS_CERT_PATH')
+  app.enableCors({
+    origin: configService.get<string[]>('NEST_ALLOWED_ORIGINS') || ['http://localhost:3000'],
+    credentials: true,
+    exposedHeaders: ['Authorization'],
+  })
 
-  if (httpsKeyPath && httpsCertPath) {
-    const httpsOptions = {
-      key: fs.readFileSync(httpsKeyPath),
-      cert: fs.readFileSync(httpsCertPath),
-    }
-    app.enableCors({
-      origin: configService.get<string[]>('ALLOWED_ORIGINS') || ['http://localhost:3000'],
-      credentials: true,
-      exposedHeaders: ['Authorization'],
-    })
-  }
-
-  const hostname = configService.get<string>('API_SERVER_HOST_NAME')
-  const port = configService.get<number>('API_SERVER_PORT') || 4000
+  const hostname = configService.get<string>('NEST_API_SERVER_HOST_NAME')
+  const port = configService.get<number>('NEST_API_SERVER_PORT') || 4000
 
   await app.listen(port, hostname)
 }
+
 bootstrap()

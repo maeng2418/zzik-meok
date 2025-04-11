@@ -1,5 +1,5 @@
-import * as Joi from 'joi';
-import { userSchema } from '../users/user.schema';
+import * as Joi from 'joi'
+import { userSchema } from '../users/user.schema'
 
 export const urlSchema = Joi.object({
   url: Joi.string().uri().required(),
@@ -9,5 +9,5 @@ export const urlSchema = Joi.object({
   createdAt: Joi.date(),
   updatedAt: Joi.date(),
   userId: Joi.number().integer().positive().required(),
-  user: userSchema
-});
+  user: userSchema,
+})

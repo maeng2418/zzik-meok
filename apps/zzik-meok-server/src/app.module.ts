@@ -1,27 +1,21 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { dataSourceOptions, ENV_PATH } from '../data-source'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { validationSchema } from './config/validationSchema'
-import { UsersModule } from './users/users.module'
 import { UrlsModule } from './urls/urls.module'
-import { User } from './users/user.entity'
-import { Url } from './urls/url.entity'
+import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [`.env.${process.env.NODE_ENV}`],
+      envFilePath: [ENV_PATH],
       isGlobal: true,
       validationSchema,
     }),
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'zzik-meok.sqlite',
-      entities: [User, Url],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot({ ...dataSourceOptions }),
     UsersModule,
     UrlsModule,
   ],

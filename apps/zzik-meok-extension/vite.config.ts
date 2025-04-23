@@ -1,6 +1,4 @@
 import react from '@vitejs/plugin-react'
-import fs from 'fs'
-import path from 'path'
 import { ConfigEnv, defineConfig, loadEnv, PluginOption } from 'vite'
 import svgr from 'vite-plugin-svgr'
 import webExtension, { readJsonFile } from 'vite-plugin-web-extension'
@@ -21,8 +19,6 @@ const generateManifest = () => {
 export default ({ mode }: ConfigEnv) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
-  const isDevelop = process.env.NODE_ENV === 'development'
-
   return defineConfig({
     plugins: [
       react(),
@@ -33,22 +29,7 @@ export default ({ mode }: ConfigEnv) => {
       tsconfigPaths(),
       svgr(),
     ],
-    build: {
-      rollupOptions: {
-        input: {
-          main: 'index.html',
-        },
-      },
-      outDir: 'dist',
-      emptyOutDir: true,
-    },
     server: {
-      https: isDevelop
-        ? {
-            key: fs.readFileSync(path.resolve(__dirname, '../../private-key.pem')),
-            cert: fs.readFileSync(path.resolve(__dirname, '../../public-certificate.pem')),
-          }
-        : undefined,
       host: process.env.VITE_EXTENSION_HOST_NAME || 'localhost',
     },
   })

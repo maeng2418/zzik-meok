@@ -36,9 +36,8 @@
     "{{chrome}}.service_worker": "src/background.ts",
     "{{firefox}}.scripts": ["src/background.ts"]
   },
-  "permissions": ["scripting", "activeTab", "https://*/*"],
+  "permissions": ["scripting", "activeTab"],
   "content_security_policy": {
-    "extension_pages": "script-src 'self' https: 'wasm-unsafe-eval'; object-src 'self'"
-  },
-  "host_permissions": ["https://*/*"]
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
 }

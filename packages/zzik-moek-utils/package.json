@@ -23,8 +23,12 @@
     "qs": "^6.13.1"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
     "@zzik-meok/eslint-config": "*",
-    "@zzik-meok/typescript-config": "*",
-    "@types/lodash-es": "^4.17.12"
+    "@zzik-meok/typescript-config": "*"
+  },
+  "volta": {
+    "node": "22.12.0",
+    "yarn": "1.22.22"
   }
 }

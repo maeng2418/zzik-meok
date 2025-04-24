@@ -3,6 +3,7 @@ import * as Joi from 'joi'
 export const validationSchema = Joi.object({
   NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
   NEST_API_SERVER_HOST_NAME: Joi.string().required(),
+  NEST_API_ROUTE_PATH: Joi.string().required().default('api'),
   NEST_API_SERVER_URL: Joi.string().required().uri(),
   NEST_API_SERVER_PORT: Joi.number().default(4000),
   NEST_PC_URL: Joi.string().required().uri(),

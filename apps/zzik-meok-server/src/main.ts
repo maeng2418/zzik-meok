@@ -50,13 +50,27 @@ const bootstrap = async () => {
   )
 
   app.enableCors({
-    origin: configService.get<string[]>('NEST_ALLOWED_ORIGINS') || ['http://localhost:3000'],
+    origin: (origin, callback) => {
+      if (
+        !origin || // same-origin (e.g., mobile app, curl)
+        configService.get<string[]>('NEST_ALLOWED_ORIGINS') ||
+        ['http://localhost'].some((allowedOrigin) => origin.startsWith(allowedOrigin))
+      ) {
+        callback(null, true)
+      } else {
+        callback(new Error('CORS 정책에 의해 차단됨'))
+      }
+    },
+    optionsSuccessStatus: 200,
     credentials: true,
     exposedHeaders: ['Authorization'],
   })
 
   const hostname = configService.get<string>('NEST_API_SERVER_HOST_NAME')
   const port = configService.get<number>('NEST_API_SERVER_PORT') || 4000
+  const apiRoutePath = configService.get<string>('NEST_API_ROUTE_PATH') || 'api'
+
+  app.setGlobalPrefix(apiRoutePath)
 
   await app.listen(port, hostname)
 }

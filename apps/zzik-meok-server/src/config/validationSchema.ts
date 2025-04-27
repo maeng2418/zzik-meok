@@ -19,4 +19,8 @@ export const validationSchema = Joi.object({
     .default('["http://localhost:3000"]'),
   NEST_RATE_LIMIT_TTL: Joi.number().default(60),
   NEST_RATE_LIMIT_MAX: Joi.number().default(100),
+  NEST_JWT_SECRET: Joi.string().required(),
+  NEST_JWT_EXPIRATION_TIME: Joi.string().default('15m'),
+  NEST_JWT_REFRESH_SECRET: Joi.string().required(),
+  NEST_JWT_REFRESH_EXPIRATION_TIME: Joi.string().default('7d'),
 })

@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { dataSourceOptions, ENV_PATH } from '../data-source'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
+import { AuthModule } from './auth/auth.module'
+import { CategoriesModule } from './categories/categories.module'
 import { validationSchema } from './config/validationSchema'
 import { UrlsModule } from './urls/urls.module'
 import { UsersModule } from './users/users.module'
@@ -18,8 +18,8 @@ import { UsersModule } from './users/users.module'
     TypeOrmModule.forRoot({ ...dataSourceOptions }),
     UsersModule,
     UrlsModule,
+    CategoriesModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

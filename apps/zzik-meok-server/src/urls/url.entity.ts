@@ -1,41 +1,49 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
   CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import { Category } from '../categories/category.entity'
 import { User } from '../users/user.entity'
 
-@Entity('urls')
+@Entity('URLs')
 export class Url {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({ length: 2000 })
+  @Column({ type: 'text' })
   url: string
 
-  @Column({ nullable: true })
-  title: string
+  @Column({ length: 255 })
+  name: string
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   description: string
 
-  @Column({ default: false })
-  isBookmarked: boolean
-
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
+  @Column({ type: 'text', nullable: true })
+  image_url: string
 
   @Column()
-  userId: number
+  user_id: number
 
-  @ManyToOne(() => User, (user) => user.urls)
-  @JoinColumn({ name: 'userId' })
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'user_id' })
   user: User
+
+  @Column({ nullable: true })
+  category_id: number
+
+  @ManyToOne(() => Category, (category) => category.urls, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'category_id' })
+  category: Category
+
+  @CreateDateColumn()
+  created_at: Date
+
+  @UpdateDateColumn()
+  updated_at: Date
 }

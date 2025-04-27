@@ -1,26 +1,31 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
-import { Url } from '../urls/url.entity'
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-@Entity('users')
+@Entity('Users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column({ length: 50 })
   name: string
 
-  @Column()
-  email: string
+  @Column({ length: 20, unique: true })
+  phone: string
 
-  @Column()
+  @Column({ length: 50, unique: true })
+  userId: string
+
+  @Column({ length: 255 })
   password: string
 
-  @OneToMany(() => Url, (url) => url.user)
-  urls: Url[]
+  @Column({ length: 100, unique: true })
+  email: string
 
-  @Column()
-  createdAt: Date
+  @Column({ nullable: true })
+  refresh_token: string
 
-  @Column()
-  updatedAt: Date
+  @CreateDateColumn()
+  created_at: Date
+
+  @UpdateDateColumn()
+  updated_at: Date
 }

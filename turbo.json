@@ -10,18 +10,18 @@
     },
     "lint": {
       "dependsOn": ["^lint"],
-      "outputs": [".eslintcache"],
-      "inputs": ["src/**/*.{ts,tsx,js,jsx}", ".eslintrc.*", "package.json"]
+      "inputs": ["src/**/*.{ts,tsx,js,jsx}", ".eslintrc.*", "package.json"],
+      "outputs": [".eslintcache"]
     },
     "dev": {
+      "dependsOn": ["^build"],
       "cache": false,
-      "persistent": true,
-      "dependsOn": ["^build"]
+      "persistent": true
     },
     "test": {
       "dependsOn": ["^build"],
-      "outputs": ["coverage/**"],
-      "inputs": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "jest.config.*"]
+      "inputs": ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "jest.config.*"],
+      "outputs": ["coverage/**"]
     },
     "clean": {
       "cache": false,
@@ -29,8 +29,8 @@
     },
     "type-check": {
       "dependsOn": ["^build"],
-      "outputs": ["*.tsbuildinfo"],
-      "inputs": ["src/**/*.{ts,tsx}", "tsconfig.json"]
+      "inputs": ["src/**/*.{ts,tsx}", "tsconfig.json"],
+      "outputs": ["*.tsbuildinfo"]
     }
   }
 }

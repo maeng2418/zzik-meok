@@ -16,20 +16,20 @@ export class GotService {
     this.instance.extend(options)
   }
 
-  private serializeParams(params?: Record<string, any>): string | undefined {
+  private serializeParams(params?: object): string | undefined {
     if (!params) return undefined
     return qs.stringify(params, { arrayFormat: 'comma' })
   }
 
-  async get(
+  async get<TResponse = unknown>(
     url: string | URL,
-    params?: Record<string, any>,
+    params?: object,
     options?: Omit<
       OptionsOfJSONResponseBody,
       'searchParams' | 'isStream' | 'resolveBodyOnly' | 'responseType'
     >,
   ) {
-    const response = await this.instance.get(url, {
+    const response = await this.instance.get<TResponse>(url, {
       searchParams: this.serializeParams(params),
       responseType: 'json',
       resolveBodyOnly: false,
@@ -38,34 +38,32 @@ export class GotService {
     return response
   }
 
-  async post(
+  async post<TResponse = unknown>(
     url: string | URL,
-    body?: Record<string, any>,
+    body?: object,
     options?: Omit<
       OptionsOfJSONResponseBody,
       'searchParams' | 'isStream' | 'resolveBodyOnly' | 'responseType' | 'json'
-    > & { params?: Record<string, any> },
+    > & { params?: object },
   ) {
-    const response = await this.instance
-      .post(url, {
-        json: body,
-        searchParams: this.serializeParams(options?.params),
-        responseType: 'json',
-        ...options,
-      })
-      .json()
+    const response = await this.instance.post<TResponse>(url, {
+      json: body,
+      searchParams: this.serializeParams(options?.params),
+      responseType: 'json',
+      ...options,
+    })
     return response
   }
 
-  async put(
+  async put<TResponse = unknown>(
     url: string | URL,
-    body?: Record<string, any>,
+    body?: object,
     options?: Omit<
       OptionsOfJSONResponseBody,
       'searchParams' | 'isStream' | 'resolveBodyOnly' | 'responseType' | 'json'
-    > & { params?: Record<string, any> },
+    > & { params?: object },
   ) {
-    const response = await this.instance.put(url, {
+    const response = await this.instance.put<TResponse>(url, {
       json: body,
       searchParams: this.serializeParams(options?.params),
       responseType: 'json',
@@ -75,14 +73,14 @@ export class GotService {
     return response
   }
 
-  async delete(
+  async delete<TResponse = unknown>(
     url: string | URL,
     options?: Omit<
       OptionsOfJSONResponseBody,
       'searchParams' | 'isStream' | 'resolveBodyOnly' | 'responseType'
-    > & { params?: Record<string, any> },
+    > & { params?: object },
   ) {
-    const response = await this.instance.delete(url, {
+    const response = await this.instance.delete<TResponse>(url, {
       searchParams: this.serializeParams(options?.params),
       responseType: 'json',
       resolveBodyOnly: true,
@@ -91,15 +89,15 @@ export class GotService {
     return response
   }
 
-  async patch(
+  async patch<TResponse = unknown>(
     url: string | URL,
-    body?: Record<string, any>,
+    body?: object,
     options?: Omit<
       OptionsOfJSONResponseBody,
       'searchParams' | 'isStream' | 'resolveBodyOnly' | 'responseType' | 'json'
-    > & { params?: Record<string, any> },
+    > & { params?: object },
   ) {
-    const response = await this.instance.patch(url, {
+    const response = await this.instance.patch<TResponse>(url, {
       json: body,
       searchParams: this.serializeParams(options?.params),
       responseType: 'json',

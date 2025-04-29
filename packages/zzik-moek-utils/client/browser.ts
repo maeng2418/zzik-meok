@@ -15,24 +15,28 @@ export class KyService {
     this.instance.extend(options)
   }
 
-  private serializeParams(params?: Record<string, any>): string | undefined {
+  private serializeParams(params?: object): string | undefined {
     if (!params) return undefined
     return qs.stringify(params, { arrayFormat: 'comma' })
   }
 
-  async get(url: Input, params?: Record<string, any>, options?: Omit<Options, 'searchParams'>) {
+  async get<TResponse = unknown>(
+    url: Input,
+    params?: object,
+    options?: Omit<Options, 'searchParams'>,
+  ) {
     return this.instance
       .get(url, {
         searchParams: this.serializeParams(params),
         ...options,
       })
-      .json()
+      .json<TResponse>()
   }
 
-  async post(
+  async post<TResponse = unknown>(
     url: Input,
-    body?: Record<string, any>,
-    options?: Omit<Options, 'searchParams'> & { params?: Record<string, any> },
+    body?: object,
+    options?: Omit<Options, 'searchParams'> & { params?: object },
   ) {
     return this.instance
       .post(url, {
@@ -40,13 +44,13 @@ export class KyService {
         searchParams: this.serializeParams(options?.params),
         ...options,
       })
-      .json()
+      .json<TResponse>()
   }
 
-  async put(
+  async put<TResponse = unknown>(
     url: Input,
-    body?: Record<string, any>,
-    options?: Omit<Options, 'searchParams'> & { params?: Record<string, any> },
+    body?: object,
+    options?: Omit<Options, 'searchParams'> & { params?: object },
   ) {
     return this.instance
       .put(url, {
@@ -54,25 +58,25 @@ export class KyService {
         searchParams: this.serializeParams(options?.params),
         ...options,
       })
-      .json()
+      .json<TResponse>()
   }
 
-  async delete(
+  async delete<TResponse = unknown>(
     url: Input,
-    options?: Omit<Options, 'searchParams'> & { params?: Record<string, any> },
+    options?: Omit<Options, 'searchParams'> & { params?: object },
   ) {
     return this.instance
       .delete(url, {
         searchParams: this.serializeParams(options?.params),
         ...options,
       })
-      .json()
+      .json<TResponse>()
   }
 
-  async patch(
+  async patch<TResponse = unknown>(
     url: Input,
-    body?: Record<string, any>,
-    options?: Omit<Options, 'searchParams'> & { params?: Record<string, any> },
+    body?: object,
+    options?: Omit<Options, 'searchParams'> & { params?: object },
   ) {
     return this.instance
       .patch(url, {
@@ -80,6 +84,6 @@ export class KyService {
         searchParams: this.serializeParams(options?.params),
         ...options,
       })
-      .json()
+      .json<TResponse>()
   }
 }

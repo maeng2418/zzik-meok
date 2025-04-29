@@ -15,7 +15,9 @@
     "@zzik-meok/utils": "*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.1.1"
+    "react-hook-form": "^7.56.1",
+    "react-router": "^7.1.1",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@types/react": "^19",

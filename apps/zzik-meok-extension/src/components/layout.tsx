@@ -15,17 +15,10 @@ const Layout = () => {
         <ModeToggle />
       </div>
       <div className="flex flex-col justify-center items-center">
-        <a
-          href="https://vite.dev"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="font-medium text-[#646cff] hover:text-[#535bf2]"
-        >
-          <ZzikMeokIcon
-            id="icon"
-            className="w-[161.45px] h-[144px] mb-3 will-change-[filter] transition-[filter] duration-300"
-          />
-        </a>
+        <ZzikMeokIcon
+          id="icon"
+          className="w-[161.45px] h-[144px] mb-3 will-change-[filter] transition-[filter] duration-300"
+        />
         <div>
           {isDark ? (
             <ZzikMeokLogoDark

@@ -1,4 +1,4 @@
-import { useCreateZzikMeokUrl } from '@/hooks/api/use-zzik-meok-urls-api'
+import { useCreateZzikMeokUrl } from '@/hooks/apis/use-zzik-meok-urls-api'
 import { useSearchParams } from 'react-router'
 
 const ZzikMeokPage = () => {

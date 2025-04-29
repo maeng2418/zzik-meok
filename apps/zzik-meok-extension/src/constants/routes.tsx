@@ -1,6 +1,7 @@
 import DefaultLayout from '@/components/layout'
-import HomePage from '@/pages/HomePage'
-import ZzikMeokPage from '@/pages/ZzikMeokPage'
+import HomePage from '@/pages/home-page'
+import LoginPage from '@/pages/login-page'
+import ZzikMeokPage from '@/pages/zzik-meok-page'
 import { RouteObject } from 'react-router'
 import URLMap from './url-map'
 
@@ -11,6 +12,10 @@ const Pages: RouteObject[] = [
       {
         path: URLMap.HOME,
         element: <HomePage />,
+      },
+      {
+        path: URLMap.LOGIN,
+        element: <LoginPage />,
       },
       {
         path: URLMap.ZZIK_MEOK,

@@ -1,3 +1,4 @@
+import GlobalErrorHandler from '@/components/global-error-handler'
 import ThemeProvider from '@/components/theme-provider'
 import Routes from '@/constants/routes'
 import { apiService } from '@/utils/api-service'
@@ -24,6 +25,12 @@ const queryClient = new QueryClient({
 
         return hasDataProperty ? response.data : response
       },
+      // React Query v5에서 에러를 Error Boundary로 전파하는 설정
+      throwOnError: true,
+    },
+    mutations: {
+      // React Query v5에서 에러를 Error Boundary로 전파하는 설정
+      throwOnError: true,
     },
   },
 })
@@ -31,9 +38,15 @@ const queryClient = new QueryClient({
 const App = () => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
+      <GlobalErrorHandler
+        onError={(error, info) => {
+          console.error('앱 레벨에서 에러가 발생했습니다:', error, info)
+        }}
+      >
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </GlobalErrorHandler>
     </ThemeProvider>
   )
 }

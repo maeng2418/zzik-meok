@@ -1,5 +1,8 @@
 import { ReactNode } from 'react'
-import { useErrorBoundary } from './use-error-boundary'
+import {
+  ErrorBoundary as ReactErrorBoundary,
+  FallbackProps as ReactFallbackProps,
+} from 'react-error-boundary'
 
 interface FallbackProps {
   error: Error
@@ -26,34 +29,36 @@ const DefaultFallback = ({ error, reset }: FallbackProps) => (
   </div>
 )
 
-// 함수형 ErrorBoundary 컴포넌트
+// 함수형 ErrorBoundary 컴포넌트 (react-error-boundary 사용)
 const ErrorBoundary = ({ children, fallback, onError }: ErrorBoundaryProps) => {
-  // 내부 에러 바운더리 상태와 컴포넌트
-  const { error, reset, ErrorBoundaryWrapper } = useErrorBoundary()
-
-  // 에러 발생 시 콜백 처리
-  if (error && onError) {
-    onError(error, { componentStack: error.stack || '' })
-  }
-
-  // 에러가 발생했을 때의 UI 처리
-  if (error) {
+  // fallback UI를 처리하는 함수
+  const fallbackRender = ({ error, resetErrorBoundary }: ReactFallbackProps) => {
     // fallback이 함수인 경우
     if (typeof fallback === 'function') {
-      return fallback({ error, reset })
+      return fallback({ error, reset: resetErrorBoundary })
     }
 
     // fallback이 ReactNode인 경우
     if (fallback) {
-      return fallback
+      return fallback as ReactNode
     }
 
     // 기본 폴백 UI
-    return <DefaultFallback error={error} reset={reset} />
+    return <DefaultFallback error={error} reset={resetErrorBoundary} />
   }
 
-  // 에러가 없을 때는 래퍼 내부에 자식 렌더링
-  return <ErrorBoundaryWrapper>{children}</ErrorBoundaryWrapper>
+  return (
+    <ReactErrorBoundary
+      fallbackRender={fallbackRender}
+      onError={(error, info) => {
+        if (onError) {
+          onError(error, { componentStack: info.componentStack || '' })
+        }
+      }}
+    >
+      {children}
+    </ReactErrorBoundary>
+  )
 }
 
 export default ErrorBoundary

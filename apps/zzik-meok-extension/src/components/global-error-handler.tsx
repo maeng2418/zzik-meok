@@ -7,6 +7,7 @@ interface GlobalErrorHandlerProps {
   children: ReactNode
   fallback?: ReactNode | ((error: ApiError, reset: () => void) => ReactNode)
   onError?: (error: ApiError, info: { componentStack: string }) => void
+  statusHandlers?: Partial<Record<number, (error: ApiError, reset: () => void) => ReactNode>>
 }
 
 /**
@@ -18,7 +19,12 @@ interface GlobalErrorHandlerProps {
  *
  * 위 모든 에러를 처리할 수 있습니다.
  */
-const GlobalErrorHandler = ({ children, fallback, onError }: GlobalErrorHandlerProps) => {
+const GlobalErrorHandler = ({
+  children,
+  fallback,
+  onError,
+  statusHandlers = {},
+}: GlobalErrorHandlerProps) => {
   // 전역 에러 상태 관리
   const [globalError, setGlobalError] = useState<ApiError | null>(null)
 
@@ -48,36 +54,6 @@ const GlobalErrorHandler = ({ children, fallback, onError }: GlobalErrorHandlerP
       }
     },
   })
-
-  // API 상태 코드별 에러 처리기
-  const statusHandlers: Partial<
-    Record<number, (error: ApiError, reset: () => void) => React.ReactNode>
-  > = {
-    401: (error, reset) => (
-      <div className="flex flex-col items-center justify-center p-4 min-h-40">
-        <h2 className="text-lg font-semibold mb-2">로그인이 필요합니다</h2>
-        <p className="text-sm text-muted-foreground mb-2">로그인 페이지로 이동해주세요</p>
-        <button
-          className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md"
-          onClick={reset}
-        >
-          로그인 페이지로 이동
-        </button>
-      </div>
-    ),
-    403: (error, reset) => (
-      <div className="flex flex-col items-center justify-center p-4 min-h-40">
-        <h2 className="text-lg font-semibold mb-2">접근 권한이 없습니다</h2>
-        <p className="text-sm text-muted-foreground mb-2">{error.message}</p>
-        <button
-          className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md"
-          onClick={reset}
-        >
-          이전 페이지로 이동
-        </button>
-      </div>
-    ),
-  }
 
   // 전역 에러가 있을 경우 에러 UI 표시
   if (globalError) {

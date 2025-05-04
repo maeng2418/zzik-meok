@@ -1,3 +1,4 @@
+import GlobalErrorHandler from '@/components/global-error-handler'
 import DefaultLayout from '@/components/layout'
 import CreateCategoryPage from '@/pages/create-category-page'
 import HomePage from '@/pages/home-page'
@@ -9,27 +10,32 @@ import URLMap from './url-map'
 
 const Pages: RouteObject[] = [
   {
-    element: <DefaultLayout />,
+    element: <GlobalErrorHandler />,
     children: [
       {
-        path: URLMap.HOME,
-        element: <HomePage />,
-      },
-      {
-        path: URLMap.LOGIN,
-        element: <LoginPage />,
-      },
-      {
-        path: URLMap.SIGN_UP,
-        element: <SignUpPage />,
-      },
-      {
-        path: URLMap.ZZIK_MEOK,
-        element: <ZzikMeokPage />,
-      },
-      {
-        path: URLMap.CREATE_CATEGORY,
-        element: <CreateCategoryPage />,
+        element: <DefaultLayout />,
+        children: [
+          {
+            path: URLMap.HOME,
+            element: <HomePage />,
+          },
+          {
+            path: URLMap.LOGIN,
+            element: <LoginPage />,
+          },
+          {
+            path: URLMap.SIGN_UP,
+            element: <SignUpPage />,
+          },
+          {
+            path: URLMap.ZZIK_MEOK,
+            element: <ZzikMeokPage />,
+          },
+          {
+            path: URLMap.CREATE_CATEGORY,
+            element: <CreateCategoryPage />,
+          },
+        ],
       },
     ],
   },

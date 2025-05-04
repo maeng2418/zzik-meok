@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { extractClasses } from '@/utils'
-import { ComponentProps, ReactNode } from 'react'
+import { ComponentProps, ReactNode, useId } from 'react'
 import { FieldError } from 'react-hook-form'
 import { Label } from './label'
 
@@ -9,17 +9,19 @@ type InputProps = ComponentProps<'input'> & {
   error?: FieldError
 }
 
-const Input = ({ className, type, ref, id, label, error, ...props }: InputProps) => {
+const Input = ({ className, type, ref, label, error, id: idProp, ...props }: InputProps) => {
+  const id = useId()
   const fontSizeClasses = extractClasses(className, 'text-')
 
   return (
     <div>
       {label && (
-        <Label htmlFor={id} className={cn('font-medium', fontSizeClasses)}>
+        <Label htmlFor={idProp || id} className={cn('font-medium', fontSizeClasses)}>
           {label}
         </Label>
       )}
       <input
+        id={idProp || id}
         type={type}
         className={cn(
           'flex h-9 w-full rounded-md border  bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-slate-950 placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dark:border-slate-800 dark:file:text-slate-50 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300',

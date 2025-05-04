@@ -39,33 +39,21 @@ const LoginPage = () => {
     <div className="w-full">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Input
-          id="userId"
           label="아이디"
           type="text"
           className={`mt-1 block w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
-          {...register('userId', {
-            required: '아이디를 입력해주세요',
-          })}
+          {...register('userId')}
           error={errors.userId}
         />
         <Input
-          id="password"
           label="비밀번호"
           type="password"
-          className={`mt-1 block w-full rounded-md border ${
-            errors.password ? 'border-red-500' : 'border-gray-300'
-          } px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
-          {...register('password', {
-            required: '비밀번호를 입력해주세요',
-            minLength: {
-              value: 6,
-              message: '비밀번호는 최소 6자 이상이어야 합니다',
-            },
-          })}
+          className={`mt-1 block w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+          {...register('password')}
           error={errors.password}
         />
         <div className="flex items-center justify-between">
-          <Checkbox id="remember" className="ml-2 block text-sm" label="로그인 상태 유지" />
+          <Checkbox className="ml-2 block text-sm" label="로그인 상태 유지" />
           <a href="#" className="text-sm text-blue-600 hover:underline">
             비밀번호 찾기
           </a>

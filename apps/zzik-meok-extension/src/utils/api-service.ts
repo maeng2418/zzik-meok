@@ -8,6 +8,7 @@ export const apiService = new KyService({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
+  credentials: 'include',
   retry: {
     limit: 3,
     methods: ['get', 'post', 'put', 'update', 'delete'],

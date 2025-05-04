@@ -1,4 +1,5 @@
 import DefaultLayout from '@/components/layout'
+import CreateCategoryPage from '@/pages/create-category-page'
 import HomePage from '@/pages/home-page'
 import LoginPage from '@/pages/login-page'
 import ZzikMeokPage from '@/pages/zzik-meok-page'
@@ -20,6 +21,10 @@ const Pages: RouteObject[] = [
       {
         path: URLMap.ZZIK_MEOK,
         element: <ZzikMeokPage />,
+      },
+      {
+        path: URLMap.CREATE_CATEGORY,
+        element: <CreateCategoryPage />,
       },
     ],
   },

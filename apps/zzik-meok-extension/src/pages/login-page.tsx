@@ -1,11 +1,10 @@
 import URLMap from '@/constants/url-map'
 import { useLogin } from '@/hooks/apis/use-auth.api'
+import { saveTokens } from '@/utils/auth'
 import { ClientError } from '@/utils/error'
-import { runWithBrowser } from '@/utils/webextension'
 import { LoginFormData, loginFormSchema } from '@/validations/auth.validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Checkbox, Input } from '@zzik-meok/ui'
-import { Cookie, CookieAttributes, toURL } from '@zzik-meok/utils/client'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router'
 
@@ -30,26 +29,8 @@ const LoginPage = () => {
     const result = await login(data)
 
     if (result.accessToken) {
-      await runWithBrowser(
-        (browser) => {
-          browser.storage.local.set({
-            access_token: result.accessToken,
-            refresh_token: result.refreshToken,
-          })
-        },
-        () => {
-          const isSecure = process.env.NODE_ENV === 'production'
-          const options: CookieAttributes = {
-            expires: 365,
-            secure: isSecure,
-            sameSite: 'strict',
-          }
-          Cookie.set('access_token', result.accessToken, options)
-          Cookie.set('refresh_token', result.refreshToken, options)
-        },
-      )
-
-      navigate(toURL(URLMap.CREATE_CATEGORY))
+      await saveTokens(result.accessToken, result.refreshToken)
+      navigate(URLMap.ZZIK_MEOK, { replace: true })
     } else {
       throw new ClientError('UNKNOWN', '토큰이 없습니다.')
     }

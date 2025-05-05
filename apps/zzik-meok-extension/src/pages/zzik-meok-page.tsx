@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 
 const ZzikMeokPage = () => {
   const {
+    watch,
     setValue,
     register,
     handleSubmit,
@@ -13,10 +14,12 @@ const ZzikMeokPage = () => {
   } = useForm<{
     zzikMeokUrl: string
     categoryId: string | undefined
+    categoryName: string | undefined
   }>({
     defaultValues: {
       zzikMeokUrl: '',
       categoryId: undefined,
+      categoryName: undefined,
     },
     // resolver: zodResolver(loginFormSchema),
   })
@@ -45,12 +48,12 @@ const ZzikMeokPage = () => {
   }
 
   const categoryOptions = useMemo(() => {
-    return (
-      categories?.map((category) => ({
+    return (categories ?? [])
+      ?.map((category) => ({
         label: category.name,
         value: category.id.toString(),
-      })) ?? []
-    )
+      }))
+      .concat({ label: '직접입력', value: '0' })
   }, [categories])
 
   return (
@@ -66,12 +69,20 @@ const ZzikMeokPage = () => {
         />
         <Select
           label="카테고리"
-          id="categoryId"
           placeholder="카테고리를 선택해주세요"
           options={categoryOptions}
           {...register('categoryId')}
           error={errors.categoryId}
         />
+        {watch('categoryId') === '0' && (
+          <Input
+            label="카테고리명"
+            type="text"
+            className={`mt-1 block w-full rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            {...register('categoryName')}
+            error={errors.categoryName}
+          />
+        )}
         <button
           id="zzik-meok-button"
           className="w-full shadow-[0_1px_#ffffffbf_inset] flex justify-center items-center gap-2 text-white text-base not-italic font-semibold leading-6 transition-all duration-[0.2s] ease-[ease-in-out] w-fit cursor-pointer px-[18px] py-[10px] rounded-lg border-[none]"

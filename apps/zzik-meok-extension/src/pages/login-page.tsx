@@ -1,10 +1,17 @@
+import URLMap from '@/constants/url-map'
 import { useLogin } from '@/hooks/apis/use-auth.api'
+import { ClientError } from '@/utils/error'
+import { runWithBrowser } from '@/utils/webextension'
 import { LoginFormData, loginFormSchema } from '@/validations/auth.validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Checkbox, Input } from '@zzik-meok/ui'
+import { Cookie, CookieAttributes, toURL } from '@zzik-meok/utils/client'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router'
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -20,18 +27,31 @@ const LoginPage = () => {
   const { mutateAsync: login, isPending: isLoading } = useLogin()
 
   const onSubmit = async (data: LoginFormData) => {
-    try {
-      const result = await login(data)
+    const result = await login(data)
 
-      if (result.access_token) {
-        localStorage.setItem('access_token', result.access_token)
+    if (result.accessToken) {
+      await runWithBrowser(
+        (browser) => {
+          browser.storage.local.set({
+            access_token: result.accessToken,
+            refresh_token: result.refreshToken,
+          })
+        },
+        () => {
+          const isSecure = process.env.NODE_ENV === 'production'
+          const options: CookieAttributes = {
+            expires: 365,
+            secure: isSecure,
+            sameSite: 'strict',
+          }
+          Cookie.set('access_token', result.accessToken, options)
+          Cookie.set('refresh_token', result.refreshToken, options)
+        },
+      )
 
-        console.log('로그인 성공:', result)
-      } else {
-        throw new Error('토큰이 없습니다.')
-      }
-    } catch (error) {
-      console.error('로그인 오류:', error)
+      navigate(toURL(URLMap.CREATE_CATEGORY))
+    } else {
+      throw new ClientError('UNKNOWN', '토큰이 없습니다.')
     }
   }
 

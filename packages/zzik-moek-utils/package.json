@@ -18,11 +18,13 @@
   "license": "MIT",
   "dependencies": {
     "got": "^14.4.5",
+    "js-cookie": "^3.0.5",
     "ky": "^1.7.4",
     "lodash-es": "^4.17.21",
     "qs": "^6.13.1"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/lodash-es": "^4.17.12",
     "@zzik-meok/eslint-config": "*",
     "@zzik-meok/typescript-config": "*"

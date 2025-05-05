@@ -22,7 +22,7 @@ export type Category = {
 export const CategoryApiKeys = {
   getAll: () => ['categories'] as const,
   getById: (id: number) => [`categories/${id}`] as const,
-  create: (payload: CreateCategoryRequest) => ['categories/create', payload] as const,
+  create: (payload: CreateCategoryRequest) => ['categories', payload] as const,
   patch: (id: number, payload: PatchCategoryRequest) => [`categories/${id}`, payload] as const,
   delete: (id: number) => [`categories/${id}`] as const,
 }

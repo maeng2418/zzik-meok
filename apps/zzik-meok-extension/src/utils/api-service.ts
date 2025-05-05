@@ -1,4 +1,6 @@
+import { Cookie } from '@zzik-meok/utils/client'
 import { HTTPError, KyService, ServerError } from '@zzik-meok/utils/client/browser'
+import { runWithBrowser } from './webextension'
 
 export const apiService = new KyService({
   prefixUrl: import.meta.env.VITE_API_SERVER_URL,
@@ -16,6 +18,16 @@ export const apiService = new KyService({
   hooks: {
     beforeRequest: [
       (request) => {
+        runWithBrowser(
+          async (browser) => {
+            const { access_token } = await browser.storage.local.get('access_token')
+            request.headers.set('Authorization', `Bearer ${access_token}`)
+          },
+          () => {
+            const access_token = Cookie.get('access_token')
+            request.headers.set('Authorization', `Bearer ${access_token}`)
+          },
+        )
         // Add any custom logic before the request is sent
         console.log('Request:', request)
       },

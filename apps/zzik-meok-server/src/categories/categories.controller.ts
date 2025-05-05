@@ -21,8 +21,8 @@ export class CategoriesController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   create(@Body() createCategoryDto: CreateCategoryDto, @Request() req) {
-    createCategoryDto.userId = req.user.id
-    return this.categoriesService.create(createCategoryDto)
+    console.log(req.user)
+    return this.categoriesService.create(createCategoryDto, req.user.userId)
   }
 
   @Get()

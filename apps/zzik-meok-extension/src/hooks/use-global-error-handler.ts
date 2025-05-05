@@ -1,28 +1,15 @@
-import { ApiError, asApiError } from '@/hooks/use-api-error'
 import { useEffect, useRef } from 'react'
 
-interface GlobalErrorHandlerOptions {
+type GlobalErrorHandlerOptions = {
   /**
    * 전역 error 이벤트 처리 함수
    */
-  onError?: (error: Error | ApiError) => void
+  onError?: (error: Error) => void
 
   /**
    * Promise rejection 이벤트 처리 함수
    */
-  onUnhandledRejection?: (error: Error | ApiError) => void
-
-  /**
-   * 에러를 ApiError로 변환할지 여부
-   * @default true
-   */
-  convertToApiError?: boolean
-
-  /**
-   * 에러 로깅 여부
-   * @default true
-   */
-  enableLogging?: boolean
+  onUnhandledRejection?: (error: Error) => void
 }
 
 /**
@@ -30,18 +17,14 @@ interface GlobalErrorHandlerOptions {
  *
  * window.onerror와 unhandledrejection 이벤트를 처리합니다.
  */
-export function useGlobalErrorHandler({
+export const useGlobalErrorHandler = ({
   onError,
   onUnhandledRejection,
-  convertToApiError = true,
-  enableLogging = true,
-}: GlobalErrorHandlerOptions = {}) {
+}: GlobalErrorHandlerOptions) => {
   // 이벤트 핸들러 참조 저장
   const handlersRef = useRef({
     onError,
     onUnhandledRejection,
-    convertToApiError,
-    enableLogging,
   })
 
   // 옵션이 변경되면 참조 업데이트
@@ -49,26 +32,19 @@ export function useGlobalErrorHandler({
     handlersRef.current = {
       onError,
       onUnhandledRejection,
-      convertToApiError,
-      enableLogging,
     }
-  }, [onError, onUnhandledRejection, convertToApiError, enableLogging])
+  }, [onError, onUnhandledRejection])
 
   useEffect(() => {
     // 전역 에러 이벤트 핸들러
     const handleGlobalError = (event: ErrorEvent) => {
-      const { onError, convertToApiError, enableLogging } = handlersRef.current
+      const { onError } = handlersRef.current
 
       // 에러 객체 추출
-      const errorObject = event.error || new Error(event.message || '알 수 없는 에러')
+      const error = event.error || new Error(event.message || '알 수 없는 에러')
 
-      // 필요하면 ApiError로 변환
-      const error = convertToApiError ? asApiError(errorObject) : errorObject
-
-      // 로깅 활성화된 경우 콘솔에 출력
-      if (enableLogging) {
-        console.error('[전역 에러]', error)
-      }
+      // 콘솔에 출력
+      console.error('[전역 에러]', error)
 
       // 콜백 함수 호출
       if (onError) {
@@ -78,21 +54,16 @@ export function useGlobalErrorHandler({
 
     // Promise rejection 이벤트 핸들러
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      const { onUnhandledRejection, convertToApiError, enableLogging } = handlersRef.current
+      const { onUnhandledRejection } = handlersRef.current
 
       // 에러 객체 추출
-      const errorObject =
+      const error =
         event.reason instanceof Error
           ? event.reason
           : new Error(String(event.reason) || '처리되지 않은 Promise 거부')
 
-      // 필요하면 ApiError로 변환
-      const error = convertToApiError ? asApiError(errorObject) : errorObject
-
-      // 로깅 활성화된 경우 콘솔에 출력
-      if (enableLogging) {
-        console.error('[처리되지 않은 Promise 거부]', error)
-      }
+      // 콘솔에 출력
+      console.error('[처리되지 않은 Promise 거부]', error)
 
       // 콜백 함수 호출
       if (onUnhandledRejection) {

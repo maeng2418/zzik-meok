@@ -1,0 +1,13 @@
+export type ServerErrorCode =
+  | 'SERVICE_ERROR'
+  | 'INTERNAL_ERROR'
+  | 'NOT_FOUND'
+  | 'INVALID_REQUEST'
+  | 'UNKNOWN'
+  | 'UNAUTHENTICATED'
+  | 'UNAUTHORIZED'
+  | 'FORBIDDEN'
+  | 'BAD_REQUEST'
+  | 'CONFLICT'
+  | 'GONE'
+  | 'LENGTH_REQUIRED'

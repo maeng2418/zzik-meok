@@ -1,5 +1,8 @@
-import ky, { Input, KyInstance, Options } from 'ky'
+import { ServerErrorCode } from '@/common'
+import ky, { HTTPError, Input, KyInstance, KyResponse, NormalizedOptions, Options } from 'ky'
 import qs from 'qs'
+
+export type { HTTPError, KyResponse }
 
 export class KyService {
   private readonly instance: KyInstance
@@ -85,5 +88,22 @@ export class KyService {
         ...options,
       })
       .json<TResponse>()
+  }
+}
+
+export class ServerError extends HTTPError {
+  readonly code: ServerErrorCode
+  readonly reason?: string
+
+  constructor(
+    response: Response,
+    request: Request,
+    options: NormalizedOptions,
+    code: ServerErrorCode,
+    reason?: string,
+  ) {
+    super(response, request, options)
+    this.code = code
+    this.reason = reason
   }
 }

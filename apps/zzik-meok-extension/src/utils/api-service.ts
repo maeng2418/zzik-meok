@@ -1,5 +1,4 @@
-import { ApiError } from '@/hooks/use-api-error'
-import { KyService } from '@zzik-meok/utils/client/browser'
+import { HTTPError, KyService, ServerError } from '@zzik-meok/utils/client/browser'
 
 export const apiService = new KyService({
   prefixUrl: import.meta.env.VITE_API_SERVER_URL,
@@ -28,13 +27,7 @@ export const apiService = new KyService({
       },
     ],
     beforeError: [
-      (error) => {
-        // KY 에러를 ApiError 형식으로 변환
-        const apiError = new Error(error.message) as ApiError
-        apiError.name = 'ApiError'
-        apiError.status = error.response?.status
-        apiError.response = error.response
-
+      (error: HTTPError) => {
         // 응답 본문이 있는 경우 파싱 시도
         if (error.response) {
           try {
@@ -43,7 +36,13 @@ export const apiService = new KyService({
               .clone()
               .json()
               .then((data) => {
-                apiError.data = data
+                return new ServerError(
+                  error.response,
+                  error.request,
+                  error.options,
+                  data.code,
+                  data.reason,
+                )
               })
               .catch(() => {
                 // JSON 파싱 실패 시 처리하지 않음
@@ -53,7 +52,13 @@ export const apiService = new KyService({
           }
         }
 
-        return apiError
+        return new ServerError(
+          error.response,
+          error.request,
+          error.options,
+          'UNKNOWN',
+          error.message,
+        )
       },
     ],
   },

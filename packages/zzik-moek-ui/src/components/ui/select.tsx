@@ -159,6 +159,7 @@ const SelectSeparator = ({
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 
 const Select = ({
+  name,
   label,
   id: idProp,
   error,
@@ -223,8 +224,24 @@ const Select = ({
   }, [options])
 
   const handleChange = (value: string) => {
-    const event = new Event('change', { bubbles: true })
-    onChange(event, value)
+    // Event.target은 읽기 전용이므로 직접 수정할 수 없습니다.
+    // 대신 CustomEvent를 사용하여 detail 속성에 필요한 정보를 전달합니다.
+    const customEvent = new CustomEvent('change', {
+      bubbles: true,
+      detail: {
+        value: value || '',
+        name: name || '',
+      },
+    })
+
+    // 원본 이벤트 대신 커스텀 이벤트와 필요한 속성을 포함한 객체를 전달합니다.
+    onChange({
+      ...customEvent,
+      target: {
+        value: value || '',
+        name: name || '',
+      } as HTMLSelectElement,
+    })
   }
 
   return (

@@ -16,9 +16,9 @@ export const isFirefoxExtension =
 export const isWebExtension = isChromeExtension || isFirefoxExtension
 
 export const runWithBrowser = async (
-  extensionCallback: (browser: Browser) => void,
+  extensionCallback: (browser: Browser) => Promise<void> | void,
   browserCallback?: () => void,
-) => {
+): Promise<void> => {
   try {
     if (!isWebExtension) {
       browserCallback?.()
@@ -26,7 +26,7 @@ export const runWithBrowser = async (
     }
 
     const { default: browser } = await import('webextension-polyfill')
-    extensionCallback(browser)
+    await extensionCallback(browser)
   } catch (error) {
     console.error('Failed to load webextension-polyfill:', error)
   }

@@ -1,15 +1,25 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import { extractClasses } from '@/utils'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { Check, ChevronDown, ChevronUp } from 'lucide-react'
-import { ComponentProps } from 'react'
+import { ComponentProps, ReactNode, useId, useMemo } from 'react'
+import { FieldError } from 'react-hook-form'
+import { Label } from './label'
 
-const Select = SelectPrimitive.Root
-
-const SelectGroup = SelectPrimitive.Group
-
-const SelectValue = SelectPrimitive.Value
+type SelectProps = ComponentProps<'select'> & {
+  label?: ReactNode
+  error?: FieldError
+  placeholder?: string
+  options: {
+    group?: string
+    label: string
+    value: string
+  }[]
+  value?: string
+  onChange: (event: Event, value?: string) => void
+}
 
 const SelectTrigger = ({
   className,
@@ -148,15 +158,93 @@ const SelectSeparator = ({
 )
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 
-export {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
+const Select = ({
+  label,
+  id: idProp,
+  error,
+  className,
+  value,
+  options,
+  placeholder,
+  onChange,
+}: SelectProps) => {
+  const id = useId()
+  const fontSizeClasses = extractClasses(className, 'text-')
+
+  const optionItems = useMemo(() => {
+    const UNGROUPED_KEY = '$$UNGROUPED$$'
+
+    if (options.some((option) => option.group)) {
+      const groupItems = options.reduce(
+        (acc: Record<string, { label: string; value: string }[]>, { group, label, value }) => {
+          if (group) {
+            if (!acc[group]) {
+              acc[group] = [{ label, value }]
+            }
+            acc[group].push({ label, value })
+          } else {
+            if (!acc[UNGROUPED_KEY]) {
+              acc[UNGROUPED_KEY] = []
+            }
+            acc[UNGROUPED_KEY].push({ label, value })
+          }
+
+          return acc
+        },
+        {},
+      )
+      return Object.entries(groupItems).map(([group, items]) => {
+        if (group === UNGROUPED_KEY) {
+          return items.map(({ label, value }) => (
+            <SelectItem key={value} value={value}>
+              {label}
+            </SelectItem>
+          ))
+        }
+
+        return (
+          <SelectPrimitive.Group key={group}>
+            <SelectLabel>{group}</SelectLabel>
+            {items.map(({ label, value }) => (
+              <SelectItem key={value} value={value}>
+                {label}
+              </SelectItem>
+            ))}
+          </SelectPrimitive.Group>
+        )
+      })
+    }
+
+    return options.map(({ value, label }) => (
+      <SelectItem key={value} value={value}>
+        {label}
+      </SelectItem>
+    ))
+  }, [options])
+
+  const handleChange = (value: string) => {
+    const event = new Event('change', { bubbles: true })
+    onChange(event, value)
+  }
+
+  return (
+    <div>
+      {label && (
+        <Label htmlFor={idProp || id} className={cn('font-medium', fontSizeClasses)}>
+          {label}
+        </Label>
+      )}
+      <SelectPrimitive.Root onValueChange={handleChange} defaultValue={value}>
+        <SelectTrigger>
+          <SelectPrimitive.Value placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>{optionItems}</SelectContent>
+      </SelectPrimitive.Root>
+      {error?.message && (
+        <p className={cn('mt-1 text-red-500', fontSizeClasses)}>{error.message}</p>
+      )}
+    </div>
+  )
 }
+
+export { Select }

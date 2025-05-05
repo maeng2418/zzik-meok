@@ -26,6 +26,7 @@ const queryClient = new QueryClient({
       },
       // React Query v5에서 에러를 Error Boundary로 전파하는 설정
       throwOnError: true,
+      retry: false,
     },
     mutations: {
       // React Query v5에서 에러를 Error Boundary로 전파하는 설정

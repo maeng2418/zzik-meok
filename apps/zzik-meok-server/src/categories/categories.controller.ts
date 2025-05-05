@@ -28,7 +28,7 @@ export class CategoriesController {
   @Get()
   @UseGuards(AuthGuard('jwt'))
   findAll(@Request() req) {
-    return this.categoriesService.findAll(req.user.id)
+    return this.categoriesService.findAll(req.user.userId)
   }
 
   @Get(':id')

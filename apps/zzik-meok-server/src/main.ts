@@ -6,6 +6,7 @@ import { rateLimit } from 'express-rate-limit'
 import * as fs from 'fs'
 import helmet from 'helmet'
 import { AppModule } from './app.module'
+import { JwtAuthExceptionFilter } from './common/filters/jwt-auth-exception.filter'
 
 const bootstrap = async () => {
   // HTTPS 설정
@@ -34,6 +35,9 @@ const bootstrap = async () => {
       },
     }),
   )
+
+  // JWT 인증 예외 필터 등록
+  app.useGlobalFilters(new JwtAuthExceptionFilter())
 
   // 보안 미들웨어 설정
   app.use(helmet())

@@ -10,11 +10,6 @@ export const apiService = new KyService({
     Accept: 'application/json',
   },
   credentials: 'include',
-  retry: {
-    limit: 3,
-    methods: ['get', 'post', 'put', 'update', 'delete'],
-    statusCodes: [408, 500, 502, 503, 504],
-  },
   hooks: {
     beforeRequest: [
       async (request) => {
@@ -46,19 +41,15 @@ export const apiService = new KyService({
       async (error: HTTPError) => {
         // 응답 본문이 있는 경우 파싱 시도
         if (error.response) {
-          try {
-            // 응답을 복제하여 사용 (Response는 한 번만 읽을 수 있음)
-            const data = await error.response.clone().json()
-            return new ServerError(
-              error.response,
-              error.request,
-              error.options,
-              data.code,
-              data.reason,
-            )
-          } catch (e) {
-            // 파싱 오류 무시
-          }
+          // 응답을 복제하여 사용 (Response는 한 번만 읽을 수 있음)
+          const data = await error.response.clone().json()
+          return new ServerError(
+            error.response,
+            error.request,
+            error.options,
+            data.code,
+            data.reason,
+          )
         }
 
         return new ServerError(
